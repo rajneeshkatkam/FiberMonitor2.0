@@ -13,4 +13,11 @@ public class LineActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(),String.valueOf(getIntent().getExtras().getString("lineName")),Toast.LENGTH_SHORT).show();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

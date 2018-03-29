@@ -6,7 +6,20 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     CustomView mumbaiDelhi,delhiKolkata,kolkataSecunderabad,secunderabadChennai,chennaiMumbai;
     Boolean flag=true;
     MediaPlayer mp;
+    public CollectionReference mColRefMD,mColRefDK,mColRefKS,mColRefSC,mColRefCM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-
 
         ///Intialization
         mumbaiDelhi=findViewById(R.id.mumbaiDelhi);
@@ -39,8 +52,209 @@ public class MainActivity extends AppCompatActivity {
         chennaiMumbai.setLineColor(Color.GREEN);
 
 
+        ////Notification Status Checking Listners
 
-        /////OnClickListeners for Each Line
+        //mColRefMD=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("WARNING").collection("LINE-MD");
+        mColRefMD=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("MUMBAI-DELHI");
+        mColRefMD.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.w("messageFail", "Listen failed.", e);
+                    return;
+                }
+
+                List<Boolean> messagesListStatus = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    if (doc.get("status") != null) {
+                        messagesListStatus.add(doc.getBoolean("status"));
+                    }
+                }
+
+                for(Boolean bol:messagesListStatus)
+                    if (!bol)
+                    {
+                        mumbaiDelhi.setLineColor(Color.RED);
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        mp.start();
+                        break;
+                    }
+                    else
+                    {
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        mumbaiDelhi.setLineColor(Color.GREEN);
+                    }
+                Log.d("StatusList", String.valueOf(messagesListStatus));
+            }
+
+        });
+
+
+
+/*
+
+        mColRefDK=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("DELHI-KOLKATA");
+        mColRefDK.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("messageFail", "Listen failed.", e);
+                    return;
+                }
+
+                List<Boolean> messagesListStatus = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    if (doc.get("status") != null) {
+                        messagesListStatus.add(doc.getBoolean("status"));
+                    }
+                }
+
+                for(Boolean bol:messagesListStatus)
+                    if (!bol)
+                    {
+                        delhiKolkata.setLineColor(Color.RED);
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        mp.start();
+                        break;
+                    }
+                    else
+                    {
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        delhiKolkata.setLineColor(Color.GREEN);
+                    }
+                Log.d("StatusList", String.valueOf(messagesListStatus));
+
+
+            }
+        });
+
+        mColRefKS=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("KOLKATA-SECUNDERABAD");
+        mColRefKS.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.w("messageFail", "Listen failed.", e);
+                    return;
+                }
+
+                List<Boolean> messagesListStatus = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    if (doc.get("status") != null) {
+                        messagesListStatus.add(doc.getBoolean("status"));
+                    }
+                }
+
+                for(Boolean bol:messagesListStatus)
+                    if (!bol)
+                    {
+                        kolkataSecunderabad.setLineColor(Color.RED);
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        mp.start();
+                        break;
+                    }
+                    else
+                    {
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        kolkataSecunderabad.setLineColor(Color.GREEN);
+                    }
+                Log.d("StatusList", String.valueOf(messagesListStatus));
+
+            }
+        });
+
+        mColRefSC=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("SECUNDERABAD-CHENNAI");
+        mColRefSC.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.w("messageFail", "Listen failed.", e);
+                    return;
+                }
+
+                List<Boolean> messagesListStatus = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    if (doc.get("status") != null) {
+                        messagesListStatus.add(doc.getBoolean("status"));
+                    }
+                }
+
+                for(Boolean bol:messagesListStatus)
+                    if (!bol)
+                    {
+                        secunderabadChennai.setLineColor(Color.RED);
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        mp.start();
+                        break;
+                    }
+                    else
+                    {
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        secunderabadChennai.setLineColor(Color.GREEN);
+                    }
+                Log.d("StatusList", String.valueOf(messagesListStatus));
+
+            }
+        });
+
+        mColRefCM=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("CHENNAI-MUMBAI");
+        mColRefCM.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.w("messageFail", "Listen failed.", e);
+                    return;
+                }
+
+                List<Boolean> messagesListStatus = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    if (doc.get("status") != null) {
+                        messagesListStatus.add(doc.getBoolean("status"));
+                    }
+                }
+
+                for(Boolean bol:messagesListStatus)
+                    if (!bol)
+                    {
+                        chennaiMumbai.setLineColor(Color.RED);
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        mp.start();
+                        break;
+                    }
+                    else
+                    {
+                        mp.release();
+                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                        chennaiMumbai.setLineColor(Color.GREEN);
+                    }
+                Log.d("StatusList", String.valueOf(messagesListStatus));
+
+            }
+        });
+
+*/
+
+
+
+
+
+
+
+
+
+        /////OnClick Custom View Listeners for Each Line
 
         mumbaiDelhi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,17 +262,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent LineActivityValues =new Intent(getApplicationContext(),LineActivity.class);
                 LineActivityValues.putExtra("lineName","MUMBAI-DELHI");
                 startActivity(LineActivityValues);
-
-                if(mumbaiDelhi.getLineColor()==Color.RED) {
-                    mumbaiDelhi.setLineColor(Color.GREEN);
-                    mp.release();
-                    mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                }
-                else
-                {
-                    mumbaiDelhi.setLineColor(Color.RED);
-                    mp.start();
-                }
             }
         });
 
@@ -68,17 +271,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent LineActivityValues =new Intent(getApplicationContext(),LineActivity.class);
                 LineActivityValues.putExtra("lineName","DELHI-KOLKATA");
                 startActivity(LineActivityValues);
-
-                if(delhiKolkata.getLineColor()==Color.RED){
-                    delhiKolkata.setLineColor(Color.GREEN);
-                    mp.release();
-                    mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                }
-                else {
-                    delhiKolkata.setLineColor(Color.RED);
-                    mp.start();
-
-                }
             }
         });
 
@@ -88,17 +280,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent LineActivityValues =new Intent(getApplicationContext(),LineActivity.class);
                 LineActivityValues.putExtra("lineName","KOLKATA-SECUNDERABAD");
                 startActivity(LineActivityValues);
-
-                if(kolkataSecunderabad.getLineColor()==Color.RED) {
-                    kolkataSecunderabad.setLineColor(Color.GREEN);
-                    mp.release();
-                    mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                }
-                else
-                {
-                    kolkataSecunderabad.setLineColor(Color.RED);
-                    mp.start();
-                }
             }
         });
 
@@ -108,18 +289,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent LineActivityValues =new Intent(getApplicationContext(),LineActivity.class);
                 LineActivityValues.putExtra("lineName","SECUNDERABAD-CHENNAI");
                 startActivity(LineActivityValues);
-
-                if(secunderabadChennai.getLineColor()==Color.RED)
-                {
-                    secunderabadChennai.setLineColor(Color.GREEN);
-                    mp.release();
-                    mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                }
-                else
-                {
-                    secunderabadChennai.setLineColor(Color.RED);
-                    mp.start();
-                }
             }
         });
 
@@ -129,22 +298,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent LineActivityValues =new Intent(getApplicationContext(),LineActivity.class);
                 LineActivityValues.putExtra("lineName","CHENNAI-MUMBAI");
                 startActivity(LineActivityValues);
-
-                if(chennaiMumbai.getLineColor()==Color.RED)
-                {
-                    chennaiMumbai.setLineColor(Color.GREEN);
-                    mp.release();
-                    mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                }
-                else
-                {
-                    chennaiMumbai.setLineColor(Color.RED);
-                    mp.start();
-                }
             }
         });
 
 
+        //// Thread for Blinking effect of the lines
         mTimer1 = new Runnable() {
             @Override
             public void run() {
@@ -172,6 +330,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mHandler.postDelayed(mTimer1, 1000);
+
+
+
+
 
 
     }
