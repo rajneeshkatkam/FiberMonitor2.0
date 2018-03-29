@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">FIberMonitorApp</string>
+    <string name="mumbai">Mumbai</string>
+    <string name="delhi">Delhi</string>
+    <string name="kolkata">Kolkata</string>
+    <string name="secunderabad">Secunderabad</string>
+    <string name="chennai">Chennai</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="railway_ofc_networks">OFC NETWORKS</string>
+    <string name="notifications">Notifications</string>
+    <string name="Password">password</string>
+    <string name="login">Login</string>
+    <string name="email_id">Email Id</string>
+    <string name="logout">logout</string>
+    <string name="graphs">Graphs</string>
+</resources>

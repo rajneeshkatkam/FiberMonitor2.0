@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomView">
+        <attr name="startX" format="float"/>
+        <attr name="startY" format="float"/>
+        <attr name="endX" format="float"/>
+        <attr name="endY" format="float"/>
+        <attr name="lineThickness" format="integer"/>
+        <attr name="lineColor" format="color"/>
+
+    </declare-styleable>
+
+
+</resources>
