@@ -67,29 +67,51 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<Boolean> messagesListStatus = new ArrayList<>();
+                //List<Boolean> messagesListStatus = new ArrayList<>();
+                List<Notifications> notificationsList=new ArrayList<>();
+                List<Notifications> cardNotification=new ArrayList<>();
+
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     if (doc.get("status") != null) {
-                        messagesListStatus.add(doc.getBoolean("status"));
+                        Notifications notifications=new Notifications();
+                        notifications.predictedFailureTime=doc.getString("predictedFailureTime");
+                        notifications.msg=doc.getString("msg");
+                        notifications.linkName=doc.getString("linkName");
+                        notifications.issueTime=doc.getString("issueTime");
+                        notifications.repairTime=doc.getString("repairTime");
+                        notifications.status=doc.getBoolean("status");
+                        notifications.distance=doc.getDouble("distance");
+                        notifications.adjustmentValue=doc.getDouble("adjustmentValue");
+                        notificationsList.add(notifications);
+                        //messagesListStatus.add(doc.getBoolean("status"));
                     }
                 }
-
-                for(Boolean bol:messagesListStatus)
-                    if (!bol)
+                Boolean play=false;
+                Boolean playSkip=false;
+                for(int i=0;i<notificationsList.size();i++)
+                    if (!notificationsList.get(i).status)
                     {
+                        cardNotification.add(notificationsList.get(i));
+                        Log.d("StatusList", String.valueOf(notificationsList.get(i).status +" "+String.valueOf(i)));
                         mumbaiDelhi.setLineColor(Color.RED);
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        mp.start();
-                        break;
+                        if(!playSkip) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            mp.start();
+                            playSkip=true;
+                        }
+                        play=true;
                     }
                     else
                     {
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        mumbaiDelhi.setLineColor(Color.GREEN);
+                        if(!play) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            mumbaiDelhi.setLineColor(Color.GREEN);
+                        }
+
                     }
-                Log.d("StatusList", String.valueOf(messagesListStatus));
+                Log.d("StatusListSS", String.valueOf(cardNotification.size()));
             }
 
         });
