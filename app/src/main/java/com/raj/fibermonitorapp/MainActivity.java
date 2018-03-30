@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    RecyclerViewAdapter recyclerViewAdapter;
+
+
     private final Handler mHandler = new Handler();
     private Runnable mTimer1;
     CustomView mumbaiDelhi,delhiKolkata,kolkataSecunderabad,secunderabadChennai,chennaiMumbai;
@@ -38,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+
+        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         ///Intialization
         mumbaiDelhi=findViewById(R.id.mumbaiDelhi);
@@ -111,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     }
+
+                recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), cardNotification);
+                recyclerView.setAdapter(recyclerViewAdapter);
                 Log.d("StatusListSS", String.valueOf(cardNotification.size()));
             }
 
