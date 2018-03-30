@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Boolean flag=true;
     MediaPlayer mp;
     public CollectionReference mColRefMD,mColRefDK,mColRefKS,mColRefSC,mColRefCM;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,17 +9,19 @@ import java.sql.Timestamp;
 public class Notifications {
 
     Number adjustmentValue,distance;
-    Timestamp damageTime,repairTime;
-    String msg;
+    Timestamp issueTime,repairTime,predictedFailureTime;
+    String msg,linkName;
     Boolean status;
 
     public Notifications() {
     }
 
-    public Notifications(Number adjustmentValue,Timestamp damageTime,Number distance,String msg,Timestamp repairTime,Boolean status){
+    public Notifications(Number adjustmentValue,Timestamp damageTime,Number distance,String msg,Timestamp repairTime,Boolean status,String linkname,Timestamp predictedFailureTime){
 
+        this.predictedFailureTime=predictedFailureTime;
         this.adjustmentValue=adjustmentValue;
-        this.damageTime=damageTime;
+        this.issueTime=damageTime;
+        this.linkName=linkname;
         this.distance=distance;
         this.msg=msg;
         this.repairTime=repairTime;

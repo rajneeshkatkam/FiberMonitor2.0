@@ -114,15 +114,17 @@ public class LineActivity extends AppCompatActivity {
             }
         };
         mHandler.postDelayed(mTimer2, 500);
+
+
     }
 
 
-   /* @Override
-    public void onPause() {
-        mHandler.removeCallbacks(mTimer2);
-        super.onPause();
-    }
-*/
+    /* @Override
+     public void onPause() {
+         mHandler.removeCallbacks(mTimer2);
+         super.onPause();
+     }
+ */
     ///////Checking Internet Connectivity
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -262,6 +264,18 @@ public class LineActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        mHandler.removeCallbacks(mTimer2);
+        otdrinitialCount=0;
+        mSeriesOTDR.resetData(new DataPoint[] {new DataPoint(otdrinitialCount,0)});
+
+        insertionLossRealTimeCount=0;
+        mSeries2.resetData(new DataPoint[] {new DataPoint(insertionLossRealTimeCount,0)});
+
+
+
+
         finish();
     }
+
+
 }
