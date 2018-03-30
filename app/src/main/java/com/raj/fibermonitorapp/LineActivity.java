@@ -89,7 +89,6 @@ public class LineActivity extends AppCompatActivity {
 
 
 
-
         //fetchOTDRInitialData();
         fetchInsertionLossRealTimeData();
 

@@ -45,6 +45,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Notifications data=list.get(list.size()-1-position);    ////For adding the Notifications at the top
         holder.cardViewText.setText(data.msg);
 
+        //MainActivity.getNotificationObject(list.get(position));
+
         holder.cardLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,9 +58,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
 
-                    //Toast.makeText(context,"Checked"+String.valueOf(position),Toast.LENGTH_SHORT).show();
-                    list.remove(list.size()-1-position);   //////For Removing the cards from the stack when the checkbox is ticked
-                    notifyDataSetChanged();
+                MainActivity.getNotificationObject(list.get(position));
+                //Toast.makeText(context,"Checked"+String.valueOf(position),Toast.LENGTH_SHORT).show();
+                list.remove(list.size()-1-position);   //////For Removing the cards from the stack when the checkbox is ticked
+                notifyDataSetChanged();
+
             }
         });
     }

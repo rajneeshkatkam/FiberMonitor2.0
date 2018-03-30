@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:id="@+id/cardButton"
             android:background="@drawable/ic_check_box_black_24dp"
-            android:scaleY="0.7"/>
+            android:scaleY="0.7" />
 
 
 

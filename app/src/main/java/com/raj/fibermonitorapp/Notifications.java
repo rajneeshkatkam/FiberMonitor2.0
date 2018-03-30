@@ -8,16 +8,18 @@ import com.google.firebase.Timestamp;
 
 public class Notifications {
 
-    Double adjustmentValue,distance;
-    String msg,linkName,issueTime,repairTime,predictedFailureTime;
+    Double adjustmentValue,distance,messageNumber;
+    String msg,linkName,issueTime,repairTime,predictedFailureTime,type;
     Boolean status;
 
 
     public Notifications() {
     }
 
-    public Notifications(Double adjustmentValue,String issueTime,Double distance,String msg,String repairTime,Boolean status,String linkname,String predictedFailureTime){
+    public Notifications(Double messageNumber,String type,Double adjustmentValue,String issueTime,Double distance,String msg,String repairTime,Boolean status,String linkname,String predictedFailureTime){
 
+        this.messageNumber=messageNumber;
+        this.type=type;
         this.predictedFailureTime=predictedFailureTime;
         this.adjustmentValue=adjustmentValue;
         this.issueTime=issueTime;
