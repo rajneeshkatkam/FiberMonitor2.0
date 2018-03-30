@@ -3,6 +3,7 @@ package com.raj.fibermonitorapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.media.TimedMetaData;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -494,18 +496,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
     }
 
 
 
     static void getNotificationObject(Notifications notifications)
     {
+
+
        // Log.i("NotifUpdate",)
         DocumentReference mDocRef;
         notifications.status=true;
