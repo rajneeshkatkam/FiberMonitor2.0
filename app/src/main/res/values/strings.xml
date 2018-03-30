@@ -15,4 +15,9 @@
     <string name="email_id">Email Id</string>
     <string name="logout">logout</string>
     <string name="graphs">Graphs</string>
+    <string name="mumbai_delhi_notifications">Mumbai-Delhi Notifications</string>
+    <string name="chennai_mumbai_notifications">CHENNAI-MUMBAI NOTIFICATIONS</string>
+    <string name="secunderabad_chennai_notifications">SECUNDERABAD-CHENNAI NOTIFICATIONS</string>
+    <string name="kolkata_secunderabad_notifications">KOLKATA-SECUNDERABAD NOTIFICATIONS</string>
+    <string name="delhi_kolkata_notifications">DELHI-KOLKATA NOTIFICATIONS</string>
 </resources>
