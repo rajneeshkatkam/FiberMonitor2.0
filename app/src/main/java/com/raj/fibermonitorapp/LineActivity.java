@@ -135,8 +135,6 @@ public class LineActivity extends AppCompatActivity {
 
 
 
-
-
     ////Insertion Loss Real Time Data;
     public void fetchInsertionLossRealTimeData() {
 
@@ -243,23 +241,7 @@ public class LineActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     @Override
     public void onBackPressed() {
         super.onBackPressed();
